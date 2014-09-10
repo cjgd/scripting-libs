@@ -1,0 +1,19 @@
+#! /bin/sed
+
+# do-0r -- howto read a file, before first line
+# Carlos Duarte <cgd@mail.teleweb.pt>, 980516
+
+1{
+	h
+	# read my file, here
+	r do-0r
+	$a\
+oops... this method only works for two or more input lines
+	d
+}
+
+2{
+	x
+	p
+	x
+}

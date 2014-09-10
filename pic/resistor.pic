@@ -1,0 +1,34 @@
+.\" resistor.pic -- an eletronics resistor symbol
+.\" $Id$
+.\" Carlos Duarte, 971126
+.\"
+.PS
+#
+define resistor_h { [
+	a = .04
+	b = .04
+	for i = 1 to 4 by 1 do {
+		line down b right a/2
+		line up 2*b right a
+		line down b right a/2
+	}
+] }
+
+define resistor_v { [
+	a=.04
+	b=.04
+	for i = 1 to 4 by 1 do {
+		line left b down a/2
+		line right 2*b down a
+		line left b down a/2
+	}
+] }
+
+line left .5
+resistor_h
+"R1" at last [].s - (0,.1)
+line .5 at last [].w; line down
+resistor_v
+"R2" at last [].e + (.1,0)
+line .5 at last [].s
+.PE

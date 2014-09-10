@@ -1,0 +1,103 @@
+# FUNCTIONS -- using functions in shell scripts
+
+# $Id$
+# Carlos Duarte <cgd@mail.teleweb.pt>, 981006/990220
+
+
+USING FUNCTIONS
+---------------
+
+If /bin/sh support functions, then each function act as "an internal
+program": it is called like an external program, it returns a status
+like a command, and it interacts with main program by reading from stdin,
+and writing to stdout.
+
+my_func() {
+	# variables local to my_func, this is not support by every
+	# shells that support functions
+	local vars
+
+	# code
+	# use $1 .. $9, for local arguments (passed as: my_func arg1 ...)
+	# $0 for name of the file
+
+	# return status code
+	return 1
+}
+
+my_func arg1 arg2 ...		# like a command
+if test $? -eq 0; then		# status code returned, like a command
+	echo ok
+else
+	echo bad
+fi
+
+my_func aa && echo ok
+
+if my_func aa; then :; else
+	echo bad
+fi
+
+	
+EMULATING FUNCTIONS
+-------------------
+
+If functions are not available, the best we can do, is: 
+
+my_func='
+	# code. 
+
+	# no args -- direct use of shell variables.
+	# return status, is the status of last executed command
+'
+
+# call with ...
+eval "$my_func"
+
+# or ... 
+x=`eval "$my_func"`
+
+
+EXAMPLES
+--------
+
+compute factorial of a number... 
+
+  ... emulating a function
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+fact='
+	eval n=$1
+	res=1
+	while test $n -gt 1; do
+		res=`expr $res \* $n`
+		n=`expr $n - 1`
+	done
+	echo $res
+'
+
+set -- 7
+echo -n $1! ... ""
+eval "$fact"
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+  ... with a real function
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+set -- 6
+x=`eval "$fact"`
+echo $1! =  $x
+
+fact_f() {
+	n=$1
+	res=1
+	while test $n -gt 1; do
+		res=`expr $res \* $n`
+		n=`expr $n - 1`
+	done
+	echo $res
+}
+
+echo -n 7! ... ""
+fact_f 7
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+

@@ -1,0 +1,48 @@
+Screen in pic
+-------------
+
+	+
+
+	^
+	|
+	up
+
+	-
+
+	^    (x,y)
+	|
+	|
+	|
+	o---> - right -> +
+
+	(0,0)
+
+Macros 
+------
+
+	==
+	define name {
+		replacement
+	}
+
+	`name' gets replaced per `replacement', each time it appears
+
+	if replacement contains $1,$2, ..., these are replaced for
+	given arguments
+
+	calls: 
+		name			no args
+		name(arg1, arg2, ,,,)	with args ($1 is replaced by arg1, etc)
+
+	empty args, are replaced by null: 
+		define f { $1 $2 }
+		f() -> $1 and $2 are nulls
+
+	==
+	undef name
+
+	undefined `name', i.e `name' will stand for itself from now on
+
+
+==
+Carlos Duarte, 981015/981026

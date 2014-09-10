@@ -1,0 +1,29 @@
+.\" cube.pic -- some cube plots
+.\" $Id$
+.\" Carlos Duarte, 971122/981016
+.\"
+.PS
+define cube { [
+	box wid $1 ht $1
+	box wid $1 ht $1 with .sw at last box .sw + (.4*$1,.3*$1)
+	line from 1st box .nw to 2nd box .nw
+	line from 1st box .ne to 2nd box .ne
+	line from 1st box .sw to 2nd box .sw
+	line from 1st box .se to 2nd box .se
+] }
+
+define cube_dash { [
+	x = .4 * $1 # x=$1*sin(3.14/6)
+	y = .3 * $1 # y=$1*cos(3.14/6)
+	box wid $1 ht $1
+	line right x up y at last box .nw then right $1 then down y left x 
+	B: line right x up y at last box .se 
+	line up $1 
+	line dotted right x up y at last box .sw then dotted up $1 
+	line dotted at B.end left $1
+] }
+
+# usage: 
+cube(2)
+cube_dash(2) with .center at last [].center - (0,3)
+.PE

@@ -1,0 +1,17 @@
+.\" diag1.pic -- a diagram example
+.\" $Id$
+.\" Carlos Duarte, 971201/981017
+.\"
+.PS
+scale = 2.54
+a = 0.6
+box wid 4*a ht a invis 
+box wid a ht a; box same; box same;  box same; 
+box wid a ht a with .nw at 1st box .sw - (0,.8)
+box wid a ht a with .nw at last box .sw 
+box wid a ht a with .nw at last box .sw 
+box wid a ht a with .nw at last box .sw 
+for f = 6 to 9 by 1 do {
+	spline from `f'th box .e right (f-3)/5 then -> to `f-4'th box .s
+}
+.PE

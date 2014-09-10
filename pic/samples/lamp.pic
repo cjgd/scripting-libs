@@ -1,0 +1,32 @@
+.\" lamp.pic -- an opaque lamp 
+.\" $Id$
+.\" Carlos Duarte, 971205/981025
+.\"
+.PS
+r = 2
+line invis right r*2
+line invis up r*2 from last line .center - (0,r)
+
+arc rad r from 1st line .end - ((1-.707)*r, .707*r) to 2nd line .end
+arc rad r to 1st line .start - (-(1-.707)*r, .707*r)
+
+spline \
+  to 2nd line .start - (r/3, 0) \
+  to 2nd line .start - (r/4, r/4) \
+  to 2nd line .start - (r/4, r/4)
+spline from 1st arc .start \
+  to 2nd line .start + (r/3, 0) \
+  to 2nd line .start + (r/4, -r/4) \
+  to 2nd line .start - (-r/4, r/4)
+
+define x { 
+	arc rad r/100 cw from last line .start to last line .start - (0,r/30)
+	arc rad r/100 from last line .end to last line .end - (0,r/30)
+	line from 2nd last arc.end to last arc.end 
+}
+
+line left r/2
+x; x; x; x
+box fill 1 wid r/7 ht r/25 below with .n at last line .center 
+
+.PE

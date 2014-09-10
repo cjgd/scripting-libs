@@ -1,0 +1,24 @@
+.\" fill_table.pic -- 10x10 squares filled with diffs tones of grey
+.\" $Id$
+.\" Carlos Duarte, 971205/981016
+.\"
+.PS
+# draws 10x10 squares
+# each square is filled with a tone of grey, obtained with fill x, 
+#  where x, goes from 0 to 1
+# use of label as a variable, to keep track of last column row start
+# 
+scale = 2.54
+x = 1
+A: line invis 
+A: A - (0,3)
+for j = 0 to 90 by 10 do {
+	move to A 
+	for i = j to j+9 by 1 do {
+		box wid x ht x fill i/100 "x"
+		sprintf(".%02g", i) below at last box .s
+		move from last box right x+.2
+	}
+	A: A - (0,x+.4)
+}
+.PE

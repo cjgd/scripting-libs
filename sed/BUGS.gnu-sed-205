@@ -1,0 +1,103 @@
+This is mainly a description of gnu sed (2.05) bugs, which should
+be the most used sed around.
+
+plus sides of gnu sed (2.05)
+
+. no limits on label size
+. no limits on buffer size
+. no limits on RE size (although REs may actually crack down)
+. freely available
+. support for 'cmd1; cmd2'
+. support for comments '#...'
+
+down sides: 
+
+. very slow in respect with other seds
+. some irritating bugs
+. re lib too big and slow
+. no documentation
+
+=====
+
+bugs desc:
+
+1. substitution flag 
+
+
+`t' command should perform a jump, only if some s/// has suceeded
+on previous commands (and the flag has not been reseted yet)
+
+gnu sed crack down when a number suffix is added, things like
+
+	s/./&/20
+	t foo
+
+should jump to foo, iff there is a 20th char on the line (read: pattern space)
+gnu sed actually will always do the jump, on non empty lines
+
+in other words: gnu sed will see if it can make the first change, and on
+true, triggers the flag; this is wrong if a count is supplied
+
+2. beginning white space
+
+sed should ignore all leading white space, in any context.
+to actually include leading white space, a slash is introduced : 
+
+/foo/ {
+	i\
+	bar
+}
+
+should outputs
+=>bar
+=>...some line with foo...
+
+gnu sed outputs
+=>	bar
+=>...some line with foo...
+
+3. \n inside []
+
+there is no easy way to include \n inside [char set] because `\n' is 
+seen as a `n' which is hardly understandble
+
+the only current way, is to make a: 
+
+	s/[^\
+	]/replacement/
+
+4. \n inside y/// 
+
+making this simple: there is no way to make y command work no a newline
+people tend to use the s/// command for that, which is inneficient
+
+5. lin1,lin2 b <label>
+
+this just dont work as expected, say: 
+
+#! /bin/sed -f
+:a
+$q
+N
+1,10ba
+$!D
+
+what a good tail command this would be, unfortunelly this simply wont
+work with gnu sed (and as a matter of fact, few seds can make this
+work)
+
+it seems the <addr1, addr2> dont behavior very well on some commads
+branch os one of them
+
+=====
+
+desired features that would be nice on (gnu) sed: 
+
+. support once and for all of \n \t \ooo etc.. (but mainly this three)
+. the \ooo would make gnu sed deal with binaries also
+  the problem is not working on bins, but reather using ^A, ^B etc.. as
+  special markers on text
+. bugs corrected :)
+
+====
+Carlos Duarte, 970517

@@ -1,0 +1,15 @@
+#! /bin/sed -f
+
+# Carlos Duarte, 980724
+# howto replace only first occurrence of FOO on entire input
+# 
+
+# one line version: sed -n 'G;/FOO\(.*\n\)$/s//BAR\1x/;h;P'
+
+s/FOO/BAR/
+tdone
+b
+
+:done
+n
+bdone

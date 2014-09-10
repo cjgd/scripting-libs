@@ -1,0 +1,51 @@
+.\" triangle.pic -- draw triangles
+.\" $Id$
+.\" Carlos Duarte, 971122
+.\"
+.PS
+# draw an equilateral triangle
+# call: eq_tri(size_dimension)
+# 
+define eq_tri { [
+	side = $1
+	line right side \
+	  then up sqrt(3)*side/2 left side/2 \
+	  then down sqrt(3)*side/2 left side/2
+] }
+
+# general triangle
+# call: tri(a,b,c)
+#
+define tri { [
+	a = $1
+	b = $2
+	c = $3
+	cos_a = (a*a-b*b-c*c)/(2*b*c)
+	sin_a = (1-cos_a*cos_a)
+	line right a
+	if (cos_a == 0) then {
+		line from last line .start right (b*cos_a) up (b*sin_a)
+	} else {
+		line from last line .start right (b*sin_a) up (b*cos_a)
+	}
+	line from last line .end to 2nd last line .end
+] }
+
+# rectangle triangle
+# call: r_tri(1,2)
+define r_tri { [
+	line down $1
+	line right $2
+	line from last line .end to 2nd last line .start
+] }
+
+scale=2
+
+eq_tri(1);	move down from last [].c
+tri(1,2,3);	move down from last [].c
+tri(2,3,4);	move down from last [].c
+tri(4,1,2);	move down from last [].c
+r_tri(1,2);	move down from last [].c
+r_tri(2,1);	move down from last [].c
+
+.PE

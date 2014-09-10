@@ -1,0 +1,23 @@
+.\" k7.pic -- a cassette drawing example
+.\" $Id$
+.\" Carlos Duarte, 971201/981017
+.\"
+.PS
+scale = 2.54
+a = 3
+box wid .9*a ht .45*a
+circle rad a/11 at 1/4 <last box.w, last box.e>
+circle rad a/11 at 3/4 <last box.w, last box.e>
+line from 3/8 <last box .nw, last box .ne> down a/10 right a/20 \
+  then right 3*a/20 \
+  then up a/10 right a/20
+pi = atan2(0,-1)
+for f = 0 to 2*pi by .4 do {
+	x = 1st circle .rad
+	line from 1st circle .c + (x*cos(f),x*sin(f)) to 1st circle .c \
+	  chop 0 chop .7*x
+	x = 2st circle .rad
+	line from 2st circle .c + (x*cos(f),x*sin(f)) to 2st circle .c \
+	  chop 0 chop .7*x
+}
+.PE

@@ -1,0 +1,22 @@
+.\" bintree.pic -- a binary tree example 
+.\" $Id$
+.\" Carlos Duarte, 971122/981025
+.\"
+.PS
+scale=2.54*1.2
+a=3
+b=1.4
+circle
+circle at 1st circle + (-a,-a)
+circle at 1st circle + (a,-a)
+circle fill 0.3 "x" at 2nd circle + (-b,-a)
+circle at 2nd circle + (b,-a)
+circle at 3nd circle + (-b,-a)
+circle at 3nd circle + (b,-a)
+arrow from 1st circle to 2nd circle chop 
+arrow from 1st circle to 3rd circle chop 
+arrow from 2nd circle to 4th circle chop 
+arrow from 2nd circle to 5th circle chop 
+arrow from 3rd circle to 6th circle chop 
+arrow from 3rd circle to 7th circle chop 
+.PE

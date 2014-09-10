@@ -1,0 +1,14 @@
+#! /bin/sh
+
+# tee-sh -- emulation of tee using sed, and a sh(1) for cycle
+#
+# Carlos Duarte <cgd@mail.teleweb.pt>, 960909/990607
+
+cmd=
+for i 
+do
+	cmd="$cmd -e 'w $i'"
+done
+
+#eval sed $cmd 
+echo sed $cmd

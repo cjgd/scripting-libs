@@ -1,0 +1,25 @@
+#! /bin/sh 
+
+# Carlos Duarte <cgd@mail.teleweb.pt>, 980722/990607 
+# diff between d, and D sed commands
+
+for i in d D; do 
+	case $i in 
+	d) echo "running with command 'd' (no output)" ;;
+	D) echo "running with command 'D' (only 2nd line)" ;;
+	esac
+	cat<<EOF|
+line 1
+line 2
+EOF
+	sed -e 1!q -e N -e $i 
+done
+
+# 
+# d: delete pattern space and goto end 
+# D: delete up to first newline and goto start 
+# 
+# i.e. neither d or D produce output, but 'd' will fetch
+# a new line, and continue from start, while 'D' branches
+# directly to top
+#

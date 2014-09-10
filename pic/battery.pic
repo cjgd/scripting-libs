@@ -1,0 +1,44 @@
+.\" battery.pic -- electronics battery symbol
+.\" $Id$
+.\" Carlos Duarte, 971126/981016
+.PS
+# battery_xxx
+#	draws an electronics battery symbol, with positive turned to `xxx'
+#
+# battery_up
+# battery_down
+# battery_left
+# battery_right
+# 
+scale=2.54
+define battery_up { [
+	line left wid 0.4; 
+	box at last line .center - (0,0.2) fill 4 wid 0.4 ht 0.1 
+] } 
+
+define battery_down { [
+	line left wid 0.4; 
+	box at last line .center + (0,0.2) fill 4 wid 0.4 ht 0.1 
+] }
+
+define battery_right { [
+	line up ht 0.4
+	box at last line .center - (0.2,0) fill 4 wid 0.1 ht 0.4
+] }
+
+define battery_left { [
+	line up ht 0.4
+	box at last line .center + (0.2,0) fill 4 wid 0.1 ht 0.4
+] }
+
+# usage
+battery_up
+line up at last [].n 
+line right
+battery_left
+line right; line down
+battery_down
+line down; line left
+battery_right
+line  left; line up
+.PE

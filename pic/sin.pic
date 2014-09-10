@@ -1,0 +1,28 @@
+.\" sin.pic -- sin function
+.\" $Id$
+.\" Carlos Duarte, 971126/981016
+.\"
+.PS
+# call: do_sin(width), plots a sin funcion, with a period (or a 
+# total horizontal measure), of `width'
+# 
+define do_sin { [
+	old_y = 0
+	old_x = 0
+	pi = atan2(0,-1)
+	for t = 0 to $1 by .025 do {
+		y = .8*sin(2*pi*t/$1)
+		x = .4*2*pi*t/$1
+		spline right x-old_x up y-old_y
+		old_y = y
+		old_x = x
+	}
+] }
+
+# usage: 
+line -> right 2.6
+line -> up 1.6 at last line.c - (0,1.6/2)
+do_sin(4) with .c at last line.center
+box dashed wid last [].wid+.2 ht last [].ht+.2 with .c at last [].c
+"sin(t)" at last box .s - (0,0.2)
+.PE
